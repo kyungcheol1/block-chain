@@ -21,7 +21,10 @@
     },
     "jest": {
         "preset": "ts-jest",
-        "testEnvironment": "node"
+        "testEnvironment": "node",
+        "moduleNameMapper": {
+            "^@(board|comment)/(.+)$": "<rootDir>/src/$1/$2"
+        }
     }
 }
 

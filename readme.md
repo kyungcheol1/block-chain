@@ -71,3 +71,30 @@ typescript 환경으로 실행하는 jest 가 실행되도록
 --testEnvironment node
 ..?? 10:18
 
+```json
+    "jest": {
+        "preset": "ts-jest",
+        "testEnvironment": "node",
+        "globals": {
+            "transform": {
+                ".ts": "ts-jest"
+            },
+            "ts-jest": {
+                "tsconfig": "tsconfig.json"
+            }
+        }
+    }
+```
+
+::12:40분부터 다시보기
+
+# TDD는 기본적으로 테스트 코드 먼저 작성해야한다
+
+test 코드 작성 > 뭘 테스트 할 지 > 빈 클래스 작성 > path 작성 > model >repository > service > controller 순으로 작성하는것이 좋음
+expect
+toBe() 값이 동일한지 확인
+toEqual() 두 객체의 값이 같은지 확인 tobe와 다르게 객체를 깊게 비교할 때 사용
+toBeCalled() 함수가 호출되었는지를 확인
+toBeCalledWith(123) 함수가 특정 인자와 함께 호출되었는지를 확인하는 것
+.toBeTruthy() 값이 true인지 확인
+
