@@ -62,20 +62,20 @@ describe("Board Service", () => {
 // describe("user controller 검증", () => {
 //     let result: { name: string } = { name: "" };
 //     let user: UserController;
-//     beforeEach(() => {
-//         user = new UserController();
-//     }); // 중복된 값이 많이 생겼을 때 쓸 수 있는것
-//     //2번 실행된다. 이벤트 실행 같은 개념
-//     afterAll(() => {
-//         //실행 되고 나서 딱 한번
-//     });
-//     afterEach(() => {
-//         //실행 되고 나서 계속
-//     });
-//     beforeAll(() => {
-//         //it 함수가 실행되기 전에 딱 한번
-//         result = { name: "hello world" };
-//     });
+// beforeEach(() => {
+//     user = new UserController();
+// }); // 중복된 값이 많이 생겼을 때 쓸 수 있는것
+// //2번 실행된다. 이벤트 실행 같은 개념
+// afterAll(() => {
+//     //실행 되고 나서 딱 한번
+// });
+// afterEach(() => {
+//     //실행 되고 나서 계속
+// });
+// beforeAll(() => {
+//     //it 함수가 실행되기 전에 딱 한번
+//     result = { name: "hello world" };
+// });
 //     it("create()함수가 잘 실행되는가 ?", () => {
 //         let a = 1 + 1;
 //         console.log(result);

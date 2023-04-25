@@ -10,10 +10,10 @@
         "baseUrl": "./src",
         "paths": {
             "@board/*": ["board/*"],
-            "@types/*": ["types/*"],
-            "@core/*": ["core/*"],
-            "@exception/*": ["exceptions/*"],
-            "@comment/*": ["comment/*"]
+            "@comment/*": ["comment/*"],
+            "@constants/*": ["constants/*"],
+            "@crypto/*": ["crypto/*"],
+            "@core/*": ["core/*"]
         }
     },
     "include": ["./src/**/*", "@types/*", "__tests__"],
