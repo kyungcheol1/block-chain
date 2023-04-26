@@ -10,7 +10,7 @@ export const GENESIS: IBlock = {
     merkleRoot: "DC24B19FB7508611ACD8AD17F401753670CFD8DD1BEBEF9C875125E98D82E3D8", //transaction 들이 모인 hash값 string이긴 하지만 hash값이 될 것.
     nonce: 0, // POW 작업증명을 할 때 필요한 속성 계산할 때 필요 number
     difficulty: 0, // 작업증명을 할 때 사용할 속성값
-    hash: "63f276c89f94976122ea51f5826d8d45e336e332bd5259f6deedbc2c01be62a8", //version mekleroot height 등등
+    hash: "84ffab55c48e36cc480e2fd4c4bb0dc5ee1bb2d41a4f2a78a1533a8bb7df8370", //version mekleroot height 등등
     data: "2009년 1월 3일 더 타임스, 은행들의 두번째 구제금융을 앞두고 있는 U.K 재무장관", // transaction 들이 모일 곳 나중에 배열형태로 만들어질 것이다.
 };
 

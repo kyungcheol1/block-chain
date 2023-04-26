@@ -6,8 +6,9 @@ import { BlockInfo } from "@core/block/block.interface";
 
 class CryptoModule {
     createBlockHash(data: BlockInfo) {
-        const values = Object.values(data).sort().join("");
-        return this.SHA256(values);
+        const value = `${data.version}${data.height}${data.timestamp}${data.merkleRoot}${data.previousHash}${data.difficulty}${data.nonce}`;
+        // const values = Object.values(data).sort().join("");
+        return this.SHA256(value);
     }
 
     SHA256(data: string): Hash {

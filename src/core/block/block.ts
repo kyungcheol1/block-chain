@@ -6,6 +6,10 @@ class Block {
     constructor(private readonly crypto: CryptoModule) {}
 
     isValidBlock(block: IBlock): void {
+        this.crypto.isValidHash(block.hash);
+        const validHash = this.crypto.createBlockHash(block);
+        if (validHash !== block.hash) throw new Error(`블럭 해시값이 옳바르지 않습니다 hash: ${validHash},${block.hash}`);
+
         //block 에 있는 hash값이 hash 형태와 일치하는가?
     }
     createBlockInfo(previousBlock: IBlock): BlockInfo {

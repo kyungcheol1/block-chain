@@ -1,5 +1,5 @@
 import { GENESIS } from "@constants/block.constants";
-import { BlockInfo } from "@core/block/block.interface";
+import { BlockData, BlockInfo } from "@core/block/block.interface";
 import CryptoModule from "@core/crypto/crypto.module";
 import merkle from "merkle";
 
@@ -20,7 +20,7 @@ describe("CryptoModule", () => {
     describe("createBlockHash", () => {
         it("SHA256에서 blockinfo 데이터로 암호화가 잘 되는가?", () => {
             //blockinfo를 넣기전에 data 속성을 빼기
-            const blockinfo: BlockInfo = {
+            const blockinfo: BlockData = {
                 version: GENESIS.version,
                 height: GENESIS.height,
                 timestamp: GENESIS.timestamp,
@@ -28,9 +28,11 @@ describe("CryptoModule", () => {
                 merkleRoot: GENESIS.merkleRoot,
                 nonce: GENESIS.nonce,
                 difficulty: GENESIS.difficulty,
+                data: "",
             };
 
             const hash = cryptoModule.createBlockHash(blockinfo);
+            //84ffab55c48e36cc480e2fd4c4bb0dc5ee1bb2d41a4f2a78a1533a8bb7df8370
             expect(hash).toHaveLength(64);
         });
     });
