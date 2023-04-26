@@ -1,6 +1,7 @@
 import { VERSION } from "@constants/block.constants";
 import CryptoModule from "@core/crypto/crypto.module";
-import { BlockInfo, IBlock } from "./block.interface";
+import { BlockData, BlockInfo, IBlock } from "./block.interface";
+import { TransactionData, TransactionRow } from "../transaction/transaction.interface";
 
 class Block {
     constructor(private readonly crypto: CryptoModule) {}
@@ -12,7 +13,19 @@ class Block {
 
         //block 에 있는 hash값이 hash 형태와 일치하는가?
     }
+    createBlockData(previousBlock: IBlock, data: TransactionData): BlockData {
+        const blockinfo = this.createBlockInfo(previousBlock);
+        //blockinfo 값을 받고 ,
+
+        return {
+            ...blockinfo,
+            merkleRoot: "",
+            data,
+        } as BlockData;
+    }
+
     createBlockInfo(previousBlock: IBlock): BlockInfo {
+        this.isValidBlock(previousBlock);
         //block 검증이란 > 해시에 대한것을 다 검증하는것이다. ex) merkleRoot, hash
         // const blockInfo: BlockInfo = {
         //     version: VERSION,

@@ -54,6 +54,25 @@ describe("CryptoModule", () => {
             const merkleroot = cryptoModule.merkleRoot(GENESIS.data);
             expect(merkleroot).toHaveLength(64);
         });
+
+        it("data 값이 TransactionRow[]형태일 경우 잘 생성 되는가 ?", () => {
+            const data = [
+                { hash: "84ffab55c48e36cc480e2fd4c4bb0dc5ee1bb2d41a4f2a78a1533a8bb7df8370" },
+                {
+                    hash: "84ffab55c48e36cc480e2fd4c4bb0dc5ee1bb2d41a4f2a78a1533a8bb7df1234",
+                },
+            ];
+            const merkleroot = cryptoModule.merkleRoot(data);
+            expect(merkleroot).toHaveLength(64);
+        });
+
+        it("data값이 올바르지 않을경우 에러가 발생하는가 ?", () => {
+            const data = [{ hash: "84ffab55c48e36cc480e2fd4c4bb0dc5ee1bb2d41a4f2a78a1533a8bb7df" }, { hash: "84ffab55c48e36cc480e2fd4c4bb0dc5ee1bb2d41a4f2a78a1533a8bb7df1234" }];
+            // const merkleroot = cryptoModule.merkleRoot(data);
+            expect(() => {
+                cryptoModule.merkleRoot(data);
+            }).toThrowError();
+        });
     });
 
     describe("isValidHash", () => {

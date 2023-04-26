@@ -1,11 +1,11 @@
 import { Hash } from "types/block";
 import cryptojs from "crypto-js";
 import merkle from "merkle";
-import { TransactionData, TransactionRow } from "@core/block/transaction/transaction.interface";
-import { BlockInfo } from "@core/block/block.interface";
+import { TransactionData, TransactionRow } from "@core/transaction/transaction.interface";
+import { BlockData, BlockInfo } from "@core/block/block.interface";
 
 class CryptoModule {
-    createBlockHash(data: BlockInfo) {
+    createBlockHash(data: BlockData) {
         const value = `${data.version}${data.height}${data.timestamp}${data.merkleRoot}${data.previousHash}${data.difficulty}${data.nonce}`;
         // const values = Object.values(data).sort().join("");
         return this.SHA256(value);
@@ -28,11 +28,23 @@ class CryptoModule {
         return binary;
     }
     merkleRoot(data: TransactionData) {
-        let merkleData = [];
-        if (data instanceof TransactionRow) {
-        } else {
+        if (typeof data === "string") {
             return merkle("sha256").sync([data]).root();
+        } else if (Array.isArray(data)) {
+            const sync = data
+                .filter((v) => {
+                    if (!v.hash) return false;
+                    else this.isValidHash(v.hash);
+                    return true;
+                })
+                .map((v) => v.hash) as string[];
+            return merkle("sha256").sync(sync).root();
         }
+        // let merkleData = [];
+        // if (data instanceof TransactionRow) {
+        // } else {
+        //     return merkle("sha256").sync([data]).root();
+        // }
     }
 
     isValidHash(hash: Hash): void {
