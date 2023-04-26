@@ -16,13 +16,12 @@ class CryptoModule {
     }
 
     hashToBinary(hash: Hash): string {
-        let binary = "";
+        let binary = ""; //aabb
         for (let i = 0; i < hash.length; i += 2) {
             //hash의 length를 2글자씩 자른다 > 1bite로 자른다
-            const hexByte = hash.substr(i, 2);
-            const decimal = parseInt(hexByte, 16);
-            const binaryByte = decimal.toString(2).padStart(8, "0");
-            console.log(binaryByte);
+            const hexByte = hash.substr(i, 2); //aa 2개 자른것
+            const decimal = parseInt(hexByte, 16); //190 16진수로
+            const binaryByte = decimal.toString(2).padStart(8, "0"); // 2진수로 채우는데 무조건 8글자 앞이 0이면 0 채우기
             binary += binaryByte;
         }
         return binary;

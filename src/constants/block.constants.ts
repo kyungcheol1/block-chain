@@ -1,7 +1,9 @@
 import { IBlock } from "core/block/block.interface";
 
+export const VERSION = "1.0.0";
+
 export const GENESIS: IBlock = {
-    version: "1.0.0", //언제 생성된건지 확인을 위한것
+    version: VERSION, //언제 생성된건지 확인을 위한것
     height: 1,
     timestamp: 1231006506,
     previousHash: "0".repeat(64), // 이전블럭

@@ -42,7 +42,7 @@ describe("CryptoModule", () => {
             const binary = cryptoModule.hashToBinary(hash);
             //1니블 -> 4bit
             // 16 1자리
-            console.log(binary);
+
             expect(binary.length).toBe(256); // 64
         });
     });
