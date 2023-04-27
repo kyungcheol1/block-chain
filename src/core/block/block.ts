@@ -2,9 +2,20 @@ import { VERSION } from "@constants/block.constants";
 import CryptoModule from "@core/crypto/crypto.module";
 import { BlockData, BlockInfo, IBlock } from "./block.interface";
 import { TransactionData, TransactionRow } from "../transaction/transaction.interface";
+import WorkProof from "./wrorkproof/workproof";
 
 class Block {
-    constructor(private readonly crypto: CryptoModule) {}
+    constructor(private readonly crypto: CryptoModule, private readonly workProof: WorkProof) {}
+
+    createBlock(previousBlock: IBlock, data: TransactionData, adjustmentBlock: IBlock) {
+        const blockData = this.createBlockData(previousBlock, data);
+        this.workProof.run(blockData, adjustmentBlock);
+        //로직 (작업증명)
+        //OOP -> 전략패턴 > 로그인 > passport
+        //기능이 추가가 되었을 때 class 를 하나 더 만든다
+    }
+    // 10번재 블럭과 이 블럭의 시간 차가 빠른지 느린지 체크하기 위해서 필요하다.
+    // 빠르게 만들고 있다면 난이도를 올리고, 느리게 만들고 있다면 난이도 내림
 
     isValidBlock(block: IBlock): void {
         this.crypto.isValidHash(block.hash);
