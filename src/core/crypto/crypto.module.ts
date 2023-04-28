@@ -1,7 +1,7 @@
 import { Hash } from "types/block";
 import cryptojs from "crypto-js";
 import merkle from "merkle";
-import { TransactionData, TransactionRow } from "@core/transaction/transaction.interface";
+import { Receipt, TransactionData, TransactionRow } from "@core/transaction/transaction.interface";
 import { BlockData, BlockInfo } from "@core/block/block.interface";
 
 class CryptoModule {
@@ -9,6 +9,16 @@ class CryptoModule {
         const value = `${data.version}${data.height}${data.timestamp}${data.merkleRoot}${data.previousHash}${data.difficulty}${data.nonce}`;
         // const values = Object.values(data).sort().join("");
         return this.SHA256(value);
+    }
+
+    createReceiptHash(receipt: Receipt) {
+        const {
+            sender: { publicKey },
+            received,
+            amount,
+        } = receipt;
+        const message = [publicKey, received, amount].join("");
+        return this.SHA256(message);
     }
 
     SHA256(data: string): Hash {
@@ -27,6 +37,7 @@ class CryptoModule {
         }
         return binary;
     }
+
     merkleRoot(data: TransactionData) {
         if (typeof data === "string") {
             return merkle("sha256").sync([data]).root();

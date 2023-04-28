@@ -1,8 +1,15 @@
+import { SignatureInput } from "elliptic";
+
+export class Sender {
+    publicKey?: string;
+    account!: string; // b라는 사람의공개 키
+}
+
 export class Receipt {
-    sender!: string;
+    sender!: Sender;
     received!: string;
-    amount!: string;
-    signauter!: unknown;
+    amount!: number;
+    signature?: SignatureInput;
 }
 
 export class TransactionRow {

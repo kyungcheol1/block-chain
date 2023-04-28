@@ -1,9 +1,11 @@
+import CryptoModule from "@core/crypto/crypto.module";
 import { randomBytes } from "crypto";
 import elliptic from "elliptic";
 import { Receipt } from "./transaction.interface";
 
 class DigitalSignature {
     private readonly ec = new elliptic.ec("secp256k1");
+    constructor(private readonly crypto: CryptoModule) {}
     //목적 1.개인키 만들기 2. 공개키 만들기
     createPrivateKey() {
         return randomBytes(32).toString("hex");
@@ -16,9 +18,33 @@ class DigitalSignature {
         return publicKey;
     }
 
-    sign(privateKey: string, receipt: Receipt) {}
+    createAccount(publicKey: string) {
+        const buffer = Buffer.from(publicKey);
+        const account = buffer.slice(26).toString();
+        return account;
+    }
 
-    verify(signauter: unknown, receipt: Receipt) {}
+    sign(privateKey: string, receipt: Receipt): Receipt {
+        const KeyPair = this.ec.keyFromPrivate(privateKey);
+        //receipt 평문 제작해야함 객체의 모양이 다를 수 있기 때문에 >> 순서가 다를 수 있기 때문에 hash화를 시켜서 진행 ?
+        const receiptHash = this.crypto.createReceiptHash(receipt);
+        const signature = KeyPair.sign(receiptHash, "hex").toDER("hex");
+        receipt.signature = signature;
+        return receipt;
+    }
+
+    verify(receipt: Receipt): boolean {
+        //공개키, 서명, 평문을 가지고 검증이 되었냐 안되었냐 평가 할것이다
+        const {
+            sender: { publicKey },
+            signature,
+        } = receipt;
+
+        if (!publicKey || !signature) throw new Error("receipt에 값이 몇개 없습니다");
+        const receiptHash = this.crypto.createReceiptHash(receipt);
+
+        return this.ec.verify(receiptHash, signature, this.ec.keyFromPublic(publicKey, "hex"));
+    }
 }
 
 export default DigitalSignature;
