@@ -7,7 +7,7 @@ class WorkProof {
     constructor(private readonly Proof: Proof) {}
     run(blockData: BlockData, adjustmentBlock: IBlock) {
         const props: ProofProps = { blockData, adjustmentBlock };
-        this.Proof.execute(props);
+        return this.Proof.execute(props);
     }
 }
 

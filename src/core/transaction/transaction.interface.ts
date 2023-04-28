@@ -1,3 +1,10 @@
+export class Receipt {
+    sender!: string;
+    received!: string;
+    amount!: string;
+    signauter!: unknown;
+}
+
 export class TransactionRow {
     hash?: string;
 }

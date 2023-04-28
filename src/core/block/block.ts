@@ -9,7 +9,8 @@ class Block {
 
     createBlock(previousBlock: IBlock, data: TransactionData, adjustmentBlock: IBlock) {
         const blockData = this.createBlockData(previousBlock, data);
-        this.workProof.run(blockData, adjustmentBlock);
+        const newBlock = this.workProof.run(blockData, adjustmentBlock);
+        return newBlock;
         //로직 (작업증명)
         //OOP -> 전략패턴 > 로그인 > passport
         //기능이 추가가 되었을 때 class 를 하나 더 만든다
@@ -30,7 +31,7 @@ class Block {
 
         return {
             ...blockinfo,
-            merkleRoot: "",
+            merkleRoot: this.crypto.merkleRoot(data),
             data,
         } as BlockData;
     }

@@ -25,10 +25,9 @@ class ProofofWork implements Proof {
             // };
             block.difficulty = this.getDifficulty(this.getDifficultyProps(block, adjustmentBlock));
             block.hash = this.crypto.createBlockHash(block);
-        } while (this.crypto.hashToBinary(block.hash).startsWith("0".repeat(block.difficulty)));
+        } while (!this.crypto.hashToBinary(block.hash).startsWith("0".repeat(block.difficulty)));
 
-        console.log("POW 실행");
-        return {} as IBlock;
+        return block;
     }
 
     getDifficultyProps(block: IBlock, adjustmentBlock: IBlock): DifficultyProps {
@@ -45,7 +44,7 @@ class ProofofWork implements Proof {
 
         if (height <= 0) throw new Error("높이가 0이 들어왔습니다.");
         if (height < 10) return 0;
-        if (height < 20) return 1;
+        if (height < 21) return 1;
 
         if (height % DIFFICULTY_ADJUSTMENT_INTERVAL !== 0) return difficulty;
 
