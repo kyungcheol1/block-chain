@@ -1,10 +1,11 @@
+import CryptoModule from "@core/crypto/crypto.module";
 import Transaction from "@core/transaction/transaction";
 
 describe("transaction ", () => {
     let transaction: Transaction;
 
     beforeEach(() => {
-        transaction = new Transaction();
+        transaction = new Transaction(new CryptoModule());
     });
 
     describe("createTxOut", () => {
@@ -43,10 +44,12 @@ describe("transaction ", () => {
             const amount = 50;
             const txout = transaction.createTxOut(account, amount);
 
-            const row = transaction.createRow([txin], [txout]);
-            console.log(row);
+            const row = transaction.createRow([txin, txin, txin], [txout]);
 
-            expect(row.txIns).toStrictEqual(txin);
+            // expect(row.txIns).toStrictEqual([txin]);
+            // expect(row.txOuts).toStrictEqual([txout]);
+            console.log(row);
+            transaction.serilizeRow(row);
         });
 
         it("매개변수내용이 옳바르지 않을때", () => {

@@ -251,3 +251,25 @@ node 라는 것에
 요청 > 트랜젝션(객체)> 트랜젝션 풀에 저장
 
 요청 > 네트워크
+
+```ts
+serilizeTx<T>(data: T[], callback: (item: T) => string) {
+        return data.reduce((acc: string, v: T) => {
+            return acc + callback(v); //this가 이 함수 안에 있는 this를 바라보기 때문에 crypto를 찾을 수 없다.// class 에 대한 this를 찾지 않는다.
+        }, "");
+    }
+
+    serilizeRow(row: TransactionRow) {
+        const { txIns, txOuts } = row;
+        if (!txIns || !txOuts) throw new Error("형태가 옳바르지 않습니다");
+
+        const text1 = this.serilizeTx<TxOut>(txOuts, this.serializeTxOut);
+        const text2 = this.serilizeTx<TxIn>(txIns, this.serializeTxIn);
+    }
+```
+
+this가 바뀌기 때문에 >> express에서도 한 번 했었던 개념
+
+(item) => this.serializeTxIn(item) 애로우 함수로 만들거나,
+고차함수로 만드는 방법이 있다.
+
