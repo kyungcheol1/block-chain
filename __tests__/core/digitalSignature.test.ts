@@ -65,7 +65,6 @@ describe("디지털서명", () => {
         });
         it("sign만들기", () => {
             const signature = digitalSignature.sign(sender_privateKey, receipt);
-            console.log(signature);
             expect(typeof signature).toBe("object");
             //30450221 DER나타낸건데 이게 1byte > 0x30 DER 형
             // 0x44 전체 바이트를 0x02 R값을 시작하는 바이트 뭘까 이게?
@@ -78,6 +77,7 @@ describe("디지털서명", () => {
             const receipt2 = digitalSignature.sign(sender_privateKey, receipt);
             //블록체인에게 recipt2를 넘겨준것
 
+            //내가 누구한테 내가 얼마를 보내는 건지도 중요하다 . amount를 바꿔도 안됨
             receipt2.signature = receipt2.signature + "asda";
             const bool = digitalSignature.verify(receipt2);
             console.log(bool);

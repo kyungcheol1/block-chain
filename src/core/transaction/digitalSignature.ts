@@ -25,10 +25,10 @@ class DigitalSignature {
     }
 
     sign(privateKey: string, receipt: Receipt): Receipt {
-        const KeyPair = this.ec.keyFromPrivate(privateKey);
+        const keyPair = this.ec.keyFromPrivate(privateKey);
         //receipt 평문 제작해야함 객체의 모양이 다를 수 있기 때문에 >> 순서가 다를 수 있기 때문에 hash화를 시켜서 진행 ?
         const receiptHash = this.crypto.createReceiptHash(receipt);
-        const signature = KeyPair.sign(receiptHash, "hex").toDER("hex");
+        const signature = keyPair.sign(receiptHash, "hex").toDER("hex");
         receipt.signature = signature;
         return receipt;
     }
