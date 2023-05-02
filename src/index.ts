@@ -42,8 +42,8 @@ const publicKey = digitalSignature.createPublicKet(privateKey);
 const account = digitalSignature.createAccount(publicKey);
 
 const tx = transaction.createCoinbase(account, GENESIS.height);
-const block1 = block.createBlock(GENESIS, [tx], GENESIS);
-console.log(block1);
+const block2 = block.createBlock(GENESIS, [tx], GENESIS);
+console.log(block2);
 const receipt: Receipt = {
     sender: {
         account,
@@ -51,11 +51,15 @@ const receipt: Receipt = {
     },
     received: "0".repeat(40),
     amount: 30,
+    signature: "0000",
 };
 
-// const txIn = transaction.createTxIn();
-// const txOut = transaction.createTxOut();
-// transaction.createRow();
+const coinbase2 = transaction.createCoinbase(account, block2.height);
+
+// const coinbase3 = transaction.createCoinbase(account, block2.height);
+// const block3 = block.createBlock(block2, [coinbase3, tx1], GENESIS);
+
+// console.log(block3);
 
 // console.log(BlockArray);
 

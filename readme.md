@@ -273,3 +273,5 @@ this가 바뀌기 때문에 >> express에서도 한 번 했었던 개념
 (item) => this.serializeTxIn(item) 애로우 함수로 만들거나,
 고차함수로 만드는 방법이 있다.
 
+txin > 잔액 확인이 필요하다
+UTXO 사용하기 때문에 필요한 개념

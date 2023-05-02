@@ -6,11 +6,21 @@
 import { IBlock } from "@core/block/block.interface";
 import CryptoModule from "@core/crypto/crypto.module";
 import { SignatureInput } from "elliptic";
-import { TransactionRow, TxIn, TxOut } from "./transaction.interface";
+import { Receipt, TransactionRow, TxIn, TxOut } from "./transaction.interface";
 
 class Transaction {
     private readonly REWARD = 50;
     constructor(private readonly crypto: CryptoModule) {}
+
+    create(receipt: Receipt) {
+        const totalAmount = 50;
+        const txin1 = this.createTxIn(1, "", receipt.signature);
+        // txin - > 영수즈엥 있는 sender에 잔액을 확인하는 작업이 필요
+        // const txIn1 = transaction.createTxIn(1, "", receipt.signature);
+        const txout_sender = this.createTxOut(receipt.sender.account, totalAmount - receipt.amount);
+        const txout_received = this.createTxOut(receipt.received, receipt.amount);
+        return this.createRow([txin1], [txout_sender, txout_received]);
+    }
 
     //TxOut
     createTxOut(account: string, amount: number) {
