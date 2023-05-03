@@ -5,7 +5,26 @@ class Wallet {
     private readonly accounts: Accounts[] = [];
     constructor(private readonly digitalSignature: DigitalSignature) {}
 
-    pushAccount(privateKey: string) {
+    // pushAccount(privateKey: string) {
+    //     if (privateKey.length !== 64) throw Error("key값이 올바르지 않습니다");
+    //     const publicKey = this.digitalSignature.createPublicKet(privateKey);
+    //     const account = this.digitalSignature.createAccount(publicKey);
+
+    //     const accounts: Accounts = {
+    //         account,
+    //         publicKey,
+    //         privateKey,
+    //     };
+    //     this.accounts.push(accounts);
+    //     return accounts;
+    // }
+
+    create(): Accounts {
+        const privateKey = this.digitalSignature.createPrivateKey();
+        return this.set(privateKey);
+    }
+
+    set(privateKey: string) {
         if (privateKey.length !== 64) throw Error("key값이 올바르지 않습니다");
         const publicKey = this.digitalSignature.createPublicKet(privateKey);
         const account = this.digitalSignature.createAccount(publicKey);
@@ -17,14 +36,6 @@ class Wallet {
         };
         this.accounts.push(accounts);
         return accounts;
-    }
-
-    create(): Accounts {
-        const privateKey = this.digitalSignature.createPrivateKey();
-        return this.pushAccount(privateKey);
-    }
-    set(privateKey: string) {
-        return this.pushAccount(privateKey);
     }
 
     getAccounts() {

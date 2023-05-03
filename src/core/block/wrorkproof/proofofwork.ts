@@ -60,7 +60,7 @@ class ProofofWork implements Proof {
         // 생성시간이 빨랐다 총걸린시간 < 목표시간/2 = 이전블록.난이도+1
         // 생성시간이 빨랐다 총걸린시간 > 목표시간*2 = 이전블록.난이도 -1
         // 비슷하면 이전블록 .난이도
-        return 0;
+        return difficulty;
     }
 }
 
