@@ -5,8 +5,9 @@
 
 import { IBlock } from "@core/block/block.interface";
 import CryptoModule from "@core/crypto/crypto.module";
+import { Receipt } from "@core/wallet/wallet.interface";
 import { SignatureInput } from "elliptic";
-import { Receipt, TransactionRow, TxIn, TxOut } from "./transaction.interface";
+import { TransactionRow, TxIn, TxOut } from "./transaction.interface";
 
 class Transaction {
     private readonly REWARD = 50;

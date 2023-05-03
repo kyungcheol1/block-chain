@@ -35,6 +35,8 @@ export class UnspentTxOut {
     account!: string;
     amount!: number;
 }
+
+export type TransactionPool = string | TransactionRow[];
 export type TransactionData = string | TransactionRow[];
 export type UnspentTxOutpool = UnspentTxOut[];
 
