@@ -5,31 +5,28 @@ class Wallet {
     private readonly accounts: Accounts[] = [];
     constructor(private readonly digitalSignature: DigitalSignature) {}
 
+    pushAccount(privateKey: string) {
+        if (privateKey.length !== 64) throw Error("key값이 올바르지 않습니다");
+        const publicKey = this.digitalSignature.createPublicKet(privateKey);
+        const account = this.digitalSignature.createAccount(publicKey);
+
+        const accounts: Accounts = {
+            account,
+            publicKey,
+            privateKey,
+        };
+        this.accounts.push(accounts);
+        return accounts;
+    }
+
     create(): Accounts {
         const privateKey = this.digitalSignature.createPrivateKey();
-        const publicKey = this.digitalSignature.createPublicKet(privateKey);
-        const account = this.digitalSignature.createAccount(publicKey);
-
-        const accounts: Accounts = {
-            account,
-            publicKey,
-            privateKey,
-        };
-        this.accounts.push(accounts);
-        return accounts;
+        return this.pushAccount(privateKey);
     }
     set(privateKey: string) {
-        const publicKey = this.digitalSignature.createPublicKet(privateKey);
-        const account = this.digitalSignature.createAccount(publicKey);
-
-        const accounts: Accounts = {
-            account,
-            publicKey,
-            privateKey,
-        };
-        this.accounts.push(accounts);
-        return accounts;
+        return this.pushAccount(privateKey);
     }
+
     getAccounts() {
         const accounts = this.accounts.map((v) => v.account);
         return accounts;
@@ -38,7 +35,7 @@ class Wallet {
         return this.accounts.filter((v) => v.account === account)[0].account;
     }
 
-    receipt(received: string, amount: number) {
+    receipt(received: string, amount: number, _privateKey?: string) {
         const { account, publicKey, privateKey } = this.accounts[0];
         const sender = {
             account,
